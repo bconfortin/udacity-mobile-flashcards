@@ -18,7 +18,7 @@ class NewDeck extends Component {
         }
 
         if (!deck.name) {
-            return this.alertForEmptyName()
+            return this.alertForInvalidSubmit()
         }
 
         this.props.dispatch(createDeck({
@@ -32,7 +32,7 @@ class NewDeck extends Component {
         toHome(this.props.navigation.navigate)
     }
 
-    alertForEmptyName = () => {
+    alertForInvalidSubmit = () => {
         Alert.alert(
             'Validation error',
             'It seems you sent an empty name for your deck. Please, choose a name for your deck.',

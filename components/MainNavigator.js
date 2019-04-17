@@ -34,6 +34,16 @@ const StackNavigator = createStackNavigator({
                 backgroundColor: '#000'
             }
         }
+    },
+    NewCard: {
+        screen: NewCard,
+        navigationOptions: {
+            headerTitle: 'New card',
+            headerTintColor: '#fff',
+            headerStyle: {
+                backgroundColor: '#000'
+            }
+        }
     }
 })
 
