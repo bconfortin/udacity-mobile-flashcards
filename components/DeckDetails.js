@@ -6,14 +6,14 @@ class DeckDetails extends Component {
     render () {
         const {decks, navigation} = this.props
         const {navigate} = this.props.navigation
-        const id = navigation.getParam('id', null);
+        const name = navigation.getParam('name', null);
 
-        if (decks && id && decks[id]) {
+        if (decks && name && decks[name]) {
             return (
                 <View>
                     <Text>Deck</Text>
-                    <Text>{JSON.stringify(decks[id])}</Text>
-                    <TouchableOpacity onPress={() => navigate('NewCard', {deckId: id})}>
+                    <Text>{JSON.stringify(decks[name])}</Text>
+                    <TouchableOpacity onPress={() => navigate('NewCard', {deckName: name})}>
                         <Text>Add new card</Text>
                     </TouchableOpacity>
                 </View>

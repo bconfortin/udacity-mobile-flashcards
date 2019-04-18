@@ -11,10 +11,12 @@ class NewDeck extends Component {
     }
 
     submit = () => {
+        const {navigate} = this.props.navigation
         const key = generateUID()
         const deck = {
             name: this.state.name,
-            id: key
+            id: key,
+            questions: []
         }
 
         if (!deck.name) {
@@ -22,14 +24,14 @@ class NewDeck extends Component {
         }
 
         this.props.dispatch(createDeck({
-            [key]: deck
+            [this.state.name]: deck
         }))
+
+        newDeck({ key: this.state.name, deck })
 
         this.setState(() => ({ name: '' }))
 
-        newDeck({ key, deck })
-
-        toHome(this.props.navigation.navigate)
+        toHome(navigate)
     }
 
     alertForInvalidSubmit = () => {

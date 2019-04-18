@@ -1,12 +1,4 @@
-import {CREATE_AND_ADD_CARD_TO_DECK, GET_CARD_BY_ID} from './actionTypes'
-
-function createAndAddCardToDeck (card, deckId) {
-    return {
-        type: CREATE_AND_ADD_CARD_TO_DECK,
-        card,
-        deckId
-    }
-}
+import {GET_CARD_BY_ID} from './actionTypes'
 
 function getCardById (id) {
     return {
@@ -16,6 +8,5 @@ function getCardById (id) {
 }
 
 export {
-    createAndAddCardToDeck,
     getCardById
 }

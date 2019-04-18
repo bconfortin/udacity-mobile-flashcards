@@ -1,33 +1,25 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {View, Text, TouchableOpacity} from 'react-native'
+import {Text, TouchableOpacity, View} from 'react-native'
 import Deck from './Deck'
-import {toNewDeck} from "../utils/helpers";
-import {NavigationActions} from "react-navigation";
-import {clearDecksStorage, fetchDecks} from "../utils/api";
+import {fetchDecks} from "../utils/api";
 import {receiveDecks} from "../actions/decks";
 
 class Decks extends Component {
     componentDidMount() {
         const {dispatch} = this.props
 
-        // Dev only
-        // clearDecksStorage()
-
-        fetchDecks()
-            .then((decks) => {
-                dispatch(receiveDecks(decks))
-            })
-
+        fetchDecks().then((decks) => {
+            dispatch(receiveDecks(decks))
+        })
     }
 
-    render () {
+    render() {
         const {navigate} = this.props.navigation
         const {decks} = this.props
 
         return (
             <View>
-                <Text>{JSON.stringify(this.props)}</Text>
                 <Text>Decks</Text>
                 {
                     decks &&

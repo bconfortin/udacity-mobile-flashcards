@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {View, Text, Alert, TextInput, TouchableOpacity} from 'react-native'
+import {Alert, Text, TextInput, TouchableOpacity, View} from 'react-native'
 import {generateUID, toHome} from "../utils/helpers";
-import {newCard} from "../utils/api";
-import {createAndAddCardToDeck} from "../actions/cards";
+import {fetchDecks, newCard} from "../utils/api";
+import {receiveDecks} from "../actions/decks";
 
 class NewCard extends Component {
     state = {
@@ -12,9 +12,9 @@ class NewCard extends Component {
     }
 
     submit = () => {
-        const {navigation} = this.props
+        const {navigation, dispatch} = this.props
         const {navigate} = this.props.navigation
-        const deckId = navigation.getParam('deckId', null)
+        const deckName = navigation.getParam('deckName', null)
         const key = generateUID()
         const card = {
             id: key,
@@ -26,16 +26,16 @@ class NewCard extends Component {
             return this.alertForInvalidSubmit()
         }
 
-        this.props.dispatch(createAndAddCardToDeck({
-            [key]: card
-        }, deckId))
+        newCard({deckName, card}).then(() => {
+            fetchDecks().then((decks) => {
+                dispatch(receiveDecks(decks))
+            })
+        })
 
         this.setState(() => ({
             question: '',
             answer: ''
         }))
-
-        newCard({ deckId, card })
 
         toHome(navigate)
     }
@@ -44,19 +44,23 @@ class NewCard extends Component {
         Alert.alert(
             'Validation error',
             'It seems you sent an empty question or answer for your card. Please, fill both the question and answer for your card.',
-            [{text: 'OK', onPress: () => {}}],
+            [{
+                text: 'OK', onPress: () => {
+                }
+            }],
             {cancelable: true},
         )
     }
 
-    render () {
+    render() {
         const {navigation} = this.props
         const id = navigation.getParam('id', null)
 
         return (
             <View>
                 <Text>NewCard</Text>
-                <TextInput onChangeText={(question) => this.setState({question})} value={this.state.question}></TextInput>
+                <TextInput onChangeText={(question) => this.setState({question})}
+                           value={this.state.question}></TextInput>
                 <TextInput onChangeText={(answer) => this.setState({answer})} value={this.state.answer}></TextInput>
                 <TouchableOpacity onPress={() => this.submit()}>
                     <Text>Submit</Text>

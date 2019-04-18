@@ -1,5 +1,4 @@
 // cards
-const CREATE_AND_ADD_CARD_TO_DECK = 'CREATE_AND_ADD_CARD_TO_DECK'
 const GET_CARD_BY_ID = 'GET_CARD_BY_ID'
 
 // decks

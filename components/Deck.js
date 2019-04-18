@@ -11,7 +11,7 @@ class Deck extends Component {
         if (deck) {
             return (
                 <View>
-                    <TouchableOpacity onPress={() => navigate('DeckDetails', {id: deck.id})}>
+                    <TouchableOpacity onPress={() => navigate('DeckDetails', {name: deck.name})}>
                         <Text>Deck</Text>
                         <Text>{JSON.stringify(deck)}</Text>
                     </TouchableOpacity>
