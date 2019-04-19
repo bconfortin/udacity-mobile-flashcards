@@ -1,9 +1,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Alert, Text, TextInput, TouchableOpacity, View} from 'react-native'
-import {generateUID, toHome} from "../utils/helpers";
-import {fetchDecks, newCard} from "../utils/api";
-import {receiveDecks} from "../actions/decks";
+import {Alert, StyleSheet, TextInput, Text, KeyboardAvoidingView} from 'react-native'
+import {generateUID, toHome} from '../utils/helpers'
+import {fetchDecks, newCard} from '../utils/api'
+import {receiveDecks} from '../actions/decks'
+import {GRAY_666, GRAY_EEE, GREEN, WHITE} from '../utils/colors'
+import StyledButton from './StyledButton'
 
 class NewCard extends Component {
     state = {
@@ -13,8 +15,7 @@ class NewCard extends Component {
 
     submit = () => {
         const {navigation, dispatch} = this.props
-        const {navigate} = this.props.navigation
-        const deckName = navigation.getParam('deckName', null)
+        const deck = navigation.getParam('deck', null)
         const key = generateUID()
         const card = {
             id: key,
@@ -26,7 +27,7 @@ class NewCard extends Component {
             return this.alertForInvalidSubmit()
         }
 
-        newCard({deckName, card}).then(() => {
+        newCard({deckName: deck.name, card}).then(() => {
             fetchDecks().then((decks) => {
                 dispatch(receiveDecks(decks))
             })
@@ -37,7 +38,7 @@ class NewCard extends Component {
             answer: ''
         }))
 
-        toHome(navigate)
+        navigation.goBack()
     }
 
     alertForInvalidSubmit = () => {
@@ -55,20 +56,46 @@ class NewCard extends Component {
     render() {
         const {navigation} = this.props
         const id = navigation.getParam('id', null)
+        const deck = navigation.getParam('deck', null)
 
         return (
-            <View>
-                <Text>NewCard</Text>
-                <TextInput onChangeText={(question) => this.setState({question})}
-                           value={this.state.question}></TextInput>
-                <TextInput onChangeText={(answer) => this.setState({answer})} value={this.state.answer}></TextInput>
-                <TouchableOpacity onPress={() => this.submit()}>
-                    <Text>Submit</Text>
-                </TouchableOpacity>
-            </View>
+            <KeyboardAvoidingView style={styles.container} behavior="padding">
+                <Text style={styles.textLabel}>Question</Text>
+                <TextInput style={styles.textInput} onChangeText={(question) => this.setState({question})}
+                           value={this.state.question}
+                           placeholder={'Write a Yes or No question'}></TextInput>
+                <Text style={styles.textLabel}>Answer</Text>
+                <TextInput style={styles.textInput} onChangeText={(answer) => this.setState({answer})}
+                           value={this.state.answer}
+                           placeholder={'Write the answer'}></TextInput>
+                <StyledButton buttonText={'Create card'} backgroundColor={GREEN} onPress={() => this.submit()}/>
+            </KeyboardAvoidingView>
         )
     }
-
 }
+
+const styles = StyleSheet.create({
+    container: {
+        marginTop: 15,
+        flex: 1,
+    },
+    textInput: {
+        borderWidth: 1,
+        borderColor: GRAY_EEE,
+        padding: 15,
+        backgroundColor: WHITE,
+        marginRight: 15,
+        marginLeft: 15,
+        marginBottom: 15
+    },
+    textLabel: {
+        color: GRAY_666,
+        fontWeight: '300',
+        fontSize: 12,
+        marginRight: 15,
+        marginLeft: 15,
+        marginBottom: 5
+    }
+})
 
 export default connect()(NewCard)

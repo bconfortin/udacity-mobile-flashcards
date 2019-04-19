@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {View, Text, TouchableOpacity} from 'react-native'
+import {View, Text, TouchableOpacity, StyleSheet, Platform} from 'react-native'
 import { withNavigation } from 'react-navigation'
+import {GRAY_666, WHITE} from "../utils/colors";
 
 class Deck extends Component {
     render () {
@@ -9,13 +10,17 @@ class Deck extends Component {
         const {navigate} = this.props.navigation
 
         if (deck) {
+            const numberOfCards = deck.questions.length
+            let cardOrCards = 'cards'
+            if (numberOfCards === 1) {
+                cardOrCards = 'card'
+            }
+
             return (
-                <View>
-                    <TouchableOpacity onPress={() => navigate('DeckDetails', {name: deck.name})}>
-                        <Text>Deck</Text>
-                        <Text>{JSON.stringify(deck)}</Text>
-                    </TouchableOpacity>
-                </View>
+                <TouchableOpacity style={styles.card} onPress={() => navigate('DeckDetails', {name: deck.name})}>
+                    <Text style={styles.name}>{deck.name}</Text>
+                    <Text style={styles.numberOfQuestions}>{`${numberOfCards} ${cardOrCards}`}</Text>
+                </TouchableOpacity>
             )
         }
 
@@ -31,5 +36,36 @@ class Deck extends Component {
         )
     }
 }
+
+const styles = StyleSheet.create({
+    card: {
+        backgroundColor: WHITE,
+        padding: 15,
+        marginRight: 15,
+        marginLeft: 15,
+        height: 150,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 0,
+        borderRadius: 2,
+        shadowRadius: 1,
+        shadowOpacity: 0.3,
+        shadowColor: 'rgba(0,0,0,0.24)',
+        shadowOffset: {
+            width: 0,
+            height: 1
+        },
+        marginBottom: 15
+    },
+    name: {
+        fontSize: 24,
+        marginBottom: 10,
+    },
+    numberOfQuestions: {
+        fontSize: 18,
+        fontWeight: '300',
+        color: GRAY_666
+    },
+})
 
 export default withNavigation(connect()(Deck))

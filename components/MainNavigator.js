@@ -3,15 +3,16 @@ import Decks from './Decks'
 import NewDeck from './NewDeck'
 import NewCard from './NewCard'
 import DeckDetails from "./DeckDetails";
+import {BLACK, GRAY_F5, WHITE} from "../utils/colors";
 
 const StackNavigator = createStackNavigator({
     Decks: {
         screen: Decks,
         navigationOptions: {
             headerTitle: 'Decks',
-            headerTintColor: '#fff',
+            headerTintColor: WHITE,
             headerStyle: {
-                backgroundColor: '#000'
+                backgroundColor: BLACK
             }
         }
     },
@@ -19,9 +20,9 @@ const StackNavigator = createStackNavigator({
         screen: NewDeck,
         navigationOptions: {
             headerTitle: 'Add a new deck',
-            headerTintColor: '#fff',
+            headerTintColor: WHITE,
             headerStyle: {
-                backgroundColor: '#000'
+                backgroundColor: BLACK
             }
         }
     },
@@ -29,9 +30,9 @@ const StackNavigator = createStackNavigator({
         screen: DeckDetails,
         navigationOptions: {
             headerTitle: 'Deck details',
-            headerTintColor: '#fff',
+            headerTintColor: WHITE,
             headerStyle: {
-                backgroundColor: '#000'
+                backgroundColor: BLACK
             }
         }
     },
@@ -39,11 +40,15 @@ const StackNavigator = createStackNavigator({
         screen: NewCard,
         navigationOptions: {
             headerTitle: 'New card',
-            headerTintColor: '#fff',
+            headerTintColor: WHITE,
             headerStyle: {
-                backgroundColor: '#000'
+                backgroundColor: BLACK
             }
         }
+    }
+}, {
+    cardStyle: {
+        backgroundColor: GRAY_F5
     }
 })
 

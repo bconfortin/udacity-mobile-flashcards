@@ -1,9 +1,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {View, Text, TextInput, TouchableOpacity, Alert} from 'react-native'
+import {Alert, KeyboardAvoidingView, StyleSheet, Text, TextInput} from 'react-native'
 import {generateUID, toHome} from "../utils/helpers";
-import {fetchDecks, newDeck} from "../utils/api";
+import {newDeck} from "../utils/api";
 import {createDeck} from "../actions/decks";
+import {GRAY_666, GRAY_EEE, GREEN, WHITE} from "../utils/colors";
+import StyledButton from './StyledButton'
 
 class NewDeck extends Component {
     state = {
@@ -27,9 +29,9 @@ class NewDeck extends Component {
             [this.state.name]: deck
         }))
 
-        newDeck({ key: this.state.name, deck })
+        newDeck({key: this.state.name, deck})
 
-        this.setState(() => ({ name: '' }))
+        this.setState(() => ({name: ''}))
 
         toHome(navigate)
     }
@@ -38,23 +40,49 @@ class NewDeck extends Component {
         Alert.alert(
             'Validation error',
             'It seems you sent an empty name for your deck. Please, choose a name for your deck.',
-            [{text: 'OK', onPress: () => {}}],
+            [{
+                text: 'OK', onPress: () => {
+                }
+            }],
             {cancelable: true},
         );
     }
 
-    render () {
+    render() {
         return (
-            <View>
-                <Text>NewDeck</Text>
-                <TextInput onChangeText={(name) => this.setState({name})} value={this.state.name}></TextInput>
-                <TouchableOpacity onPress={() => this.submit()}>
-                    <Text>Submit</Text>
-                </TouchableOpacity>
-            </View>
+            <KeyboardAvoidingView behavior="padding" style={styles.container}>
+                <Text style={styles.textLabel}>Deck name</Text>
+                <TextInput style={styles.textInput} onChangeText={(name) => this.setState({name})}
+                           value={this.state.name}></TextInput>
+                <StyledButton buttonText={'Create deck'} backgroundColor={GREEN} onPress={() => this.submit()}/>
+            </KeyboardAvoidingView>
         )
     }
 
 }
+
+const styles = StyleSheet.create({
+    container: {
+        marginTop: 15,
+        flex: 1,
+    },
+    textInput: {
+        borderWidth: 1,
+        borderColor: GRAY_EEE,
+        padding: 15,
+        backgroundColor: WHITE,
+        marginRight: 15,
+        marginLeft: 15,
+        marginBottom: 15
+    },
+    textLabel: {
+        color: GRAY_666,
+        fontWeight: '300',
+        fontSize: 12,
+        marginRight: 15,
+        marginLeft: 15,
+        marginBottom: 5
+    }
+})
 
 export default connect()(NewDeck)
