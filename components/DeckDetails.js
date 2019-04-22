@@ -18,7 +18,7 @@ class DeckDetails extends Component {
                     <StyledButton buttonText={'Add new card'} backgroundColor={GREEN}
                                   onPress={() => navigate('NewCard', {deck: decks[name]})}/>
                     <StyledButton buttonText={'Start quiz'} backgroundColor={INDIGO}
-                                  onPress={() => navigate('NewCard', {deck: decks[name]})}/>
+                                  onPress={() => navigate('Quiz', {deck: decks[name]})}/>
                 </View>
             )
         }

@@ -53,7 +53,8 @@ class NewDeck extends Component {
             <KeyboardAvoidingView behavior="padding" style={styles.container}>
                 <Text style={styles.textLabel}>Deck name</Text>
                 <TextInput style={styles.textInput} onChangeText={(name) => this.setState({name})}
-                           value={this.state.name}></TextInput>
+                           value={this.state.name}
+                           placeholder={'E.g.: Math test, history exam, etc'}></TextInput>
                 <StyledButton buttonText={'Create deck'} backgroundColor={GREEN} onPress={() => this.submit()}/>
             </KeyboardAvoidingView>
         )

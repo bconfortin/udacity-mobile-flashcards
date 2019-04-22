@@ -4,6 +4,7 @@ import NewDeck from './NewDeck'
 import NewCard from './NewCard'
 import DeckDetails from "./DeckDetails";
 import {BLACK, GRAY_F5, WHITE} from "../utils/colors";
+import Quiz from "./Quiz";
 
 const StackNavigator = createStackNavigator({
     Decks: {
@@ -40,6 +41,16 @@ const StackNavigator = createStackNavigator({
         screen: NewCard,
         navigationOptions: {
             headerTitle: 'New card',
+            headerTintColor: WHITE,
+            headerStyle: {
+                backgroundColor: BLACK
+            }
+        }
+    },
+    Quiz: {
+        screen: Quiz,
+        navigationOptions: {
+            headerTitle: 'Quiz',
             headerTintColor: WHITE,
             headerStyle: {
                 backgroundColor: BLACK
