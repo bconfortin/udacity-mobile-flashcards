@@ -46,12 +46,20 @@ class Quiz extends Component {
         return navigation.getParam('deck', null)
     }
 
+    restartQuiz = () => {
+        this.setState((state) => ({
+            finishedQuiz: false,
+            currentQuestion: 0,
+            correctAnswers: 0
+        }))
+    }
+
     render() {
         const deck = this.getDeck()
 
         if (this.state.finishedQuiz) {
             return (
-                <QuizScore correctAnswers={this.state.correctAnswers} totalQuestions={deck.questions.length}/>
+                <QuizScore correctAnswers={this.state.correctAnswers} totalQuestions={deck.questions.length} restartQuiz={() => this.restartQuiz()}/>
             )
         }
 

@@ -1,11 +1,11 @@
 import React from 'react'
 import {StyleSheet, Text, View} from 'react-native'
-import {GRAY_666, INDIGO, RED, WHITE} from '../utils/colors'
+import {GRAY_666, GREEN, INDIGO, RED, WHITE} from '../utils/colors'
 import StyledButton from './StyledButton'
 import {withNavigation} from 'react-navigation'
 
 function QuizScore(props) {
-    const {correctAnswers, totalQuestions, navigation} = props
+    const {correctAnswers, totalQuestions, restartQuiz, navigation} = props
 
     return (
         <View style={styles.container}>
@@ -20,8 +20,11 @@ function QuizScore(props) {
                 }
                 <Text style={styles.text}>Your score:</Text>
                 <Text style={styles.scoreText}>{correctAnswers}/{totalQuestions}</Text>
-                <StyledButton style={{marginBottom: 0}} buttonText={'Go back'} backgroundColor={INDIGO}
+                <StyledButton style={{marginBottom: 15, width: '100%'}} buttonText={'Go back'} backgroundColor={INDIGO}
                               onPress={() => navigation.goBack()}/>
+                <StyledButton style={{marginBottom: 0, width: '100%'}} buttonText={'Restart Quiz'} backgroundColor={GREEN}
+                              onPress={() => restartQuiz()}/>
+
             </View>
         </View>
     )
