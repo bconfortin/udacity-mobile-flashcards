@@ -1,85 +1,56 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Animated, Text, View, TouchableOpacity, StyleSheet} from 'react-native'
-import {GRAY_CCC, GREEN, INDIGO, RED, WHITE} from "../utils/colors";
-import StyledButton from './StyledButton'
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native'
+import {GRAY_CCC, GREEN, RED, WHITE} from '../utils/colors'
+import FlipCard from 'react-native-flip-card'
 
 class Card extends Component {
-    // Card Flip animation taken from:
-    // https://github.com/browniefed/examples/blob/animated_basic/flip/animatedbasic/index.ios.js
-
-    componentWillMount() {
-        this.animatedValue = new Animated.Value(0);
-        this.value = 0;
-
-        this.animatedValue.addListener(({value}) => {
-            this.value = value;
-        })
-
-        this.frontInterpolate = this.animatedValue.interpolate({
-            inputRange: [0, 180],
-            outputRange: ['0deg', '180deg'],
-        })
-
-        this.backInterpolate = this.animatedValue.interpolate({
-            inputRange: [0, 180],
-            outputRange: ['180deg', '360deg']
-        })
-    }
-
-    flipCard() {
-        if (this.value >= 90) {
-            Animated.spring(this.animatedValue, {
-                toValue: 0,
-                friction: 8,
-                tension: 10
-            }).start();
-        } else {
-            Animated.spring(this.animatedValue, {
-                toValue: 180,
-                friction: 8,
-                tension: 10
-            }).start();
-        }
+    handleAnswer = (answer) => {
+        this.props.handleAnswer(answer)
     }
 
     render() {
-        const frontAnimatedStyle = {
-            transform: [
-                {rotateY: this.frontInterpolate}
-            ]
-        }
-
-        const backAnimatedStyle = {
-            transform: [
-                {rotateY: this.backInterpolate}
-            ]
-        }
-
         const {question, answer} = this.props.card
 
         return (
             <View style={styles.container}>
-                <Animated.View style={[styles.flipCard, frontAnimatedStyle]}>
-                    <Text>{question}</Text>
-                    <StyledButton style={{marginTop: 15}} buttonText={'See the answer'} backgroundColor={INDIGO}
-                                  onPress={() => this.flipCard()}/>
-                </Animated.View>
-                <Animated.View style={[backAnimatedStyle, styles.flipCard, styles.flipCardBack]}>
-                    <Text>{answer}</Text>
-                    <TouchableOpacity onPress={() => this.flipCard()}>
-                        <Text style={styles.textButton}>See the question again</Text>
-                    </TouchableOpacity>
-                    <Text>Were you right?</Text>
-                    <View style={styles.buttonsContainer}>
-                        <TouchableOpacity style={[styles.button, styles.buttonWrongAnswer]} onPress={() => this.props.handleAnswer(false)}>
-                            <Text style={styles.buttonText}>No</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[styles.button, styles.buttonCorrectAnswer]} onPress={() => this.props.handleAnswer(true)}>
-                            <Text style={styles.buttonText}>Yes</Text>
-                        </TouchableOpacity>
+                <FlipCard style={styles.card}
+                          friction={6}
+                          perspective={1000}
+                          flipHorizontal={true}
+                          flipVertical={false}
+                          flip={false}
+                          clickable={true}>
+                    <View style={[styles.flipContainer]}>
+                        <View>
+                            <Text>{question}</Text>
+                            <Text style={[styles.textButton, {marginTop: 15}]}>See the answer</Text>
+                        </View>
                     </View>
-                </Animated.View>
+                    <View style={[styles.flipContainer]}>
+                        <View style={{
+                            flex: 1,
+                            alignSelf: 'center',
+                            justifyContent: 'center',
+                            alignContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <Text>{answer}</Text>
+                            <Text style={styles.textButton}>See the question again</Text>
+                            <Text style={{marginBottom: 15}}>Were you right?</Text>
+                            <View style={styles.buttonsContainer}>
+                                <TouchableOpacity style={[styles.button, styles.buttonWrongAnswer]}
+                                                  onPress={() => this.handleAnswer(false)}>
+                                    <Text style={styles.buttonText}>No</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[styles.button, styles.buttonCorrectAnswer]}
+                                                  onPress={() => this.handleAnswer(true)}>
+                                    <Text style={styles.buttonText}>Yes</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </FlipCard>
             </View>
         )
     }
@@ -88,16 +59,20 @@ class Card extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
+        alignItems: 'stretch',
+        justifyContent: 'center',
+        alignContent: 'stretch'
+    },
+    flipContainer: {
+        flex: 1,
+        alignContent: 'center',
         justifyContent: 'center',
     },
-    flipCard: {
-        backfaceVisibility: 'hidden',
+    card: {
         backgroundColor: WHITE,
         padding: 15,
-        marginRight: 15,
-        marginLeft: 15,
-        height: 150,
+        margin: 15,
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 0,
@@ -110,8 +85,6 @@ const styles = StyleSheet.create({
             height: 1
         },
     },
-    flipCardBack: {
-    },
     textButton: {
         color: GRAY_CCC,
         marginTop: 15,
@@ -119,19 +92,19 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     buttonsContainer: {
-        flex: 1,
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        alignItems: 'stretch',
+        alignContent: 'stretch'
     },
     button: {
         padding: 15,
         flex: 0.5
     },
     buttonCorrectAnswer: {
-        backgroundColor: RED
+        backgroundColor: GREEN
     },
     buttonWrongAnswer: {
-        backgroundColor: GREEN
+        backgroundColor: RED
     },
     buttonText: {
         color: WHITE,
@@ -139,7 +112,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontWeight: '700'
     }
-});
+})
 
 
 export default connect()(Card)

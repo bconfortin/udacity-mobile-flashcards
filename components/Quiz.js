@@ -1,9 +1,19 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {View, Text, StyleSheet} from 'react-native'
+import {StyleSheet, View} from 'react-native'
 import Card from './Card'
+import QuizScore from "./QuizScore";
 
 class Quiz extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            finishedQuiz: false,
+            currentQuestion: 0,
+            correctAnswers: 0
+        }
+    }
+
     handleAnswer = async (answer) => {
         if (answer) {
             await this.setState((state) => ({
@@ -16,8 +26,6 @@ class Quiz extends Component {
     }
 
     nextQuestion = async () => {
-        console.log('nextQuestion')
-        console.log(this.state)
         const deck = this.getDeck()
 
         if ((this.state.currentQuestion + 1) >= deck.questions.length) {
@@ -31,14 +39,6 @@ class Quiz extends Component {
                 currentQuestion: state.currentQuestion + 1
             }))
         }
-        console.log(this.state)
-
-    }
-
-    score = () => {
-        const deck = this.getDeck()
-
-        return <Text>{this.state.correctAnswers}/{deck.questions.length}</Text>
     }
 
     getDeck = () => {
@@ -46,21 +46,12 @@ class Quiz extends Component {
         return navigation.getParam('deck', null)
     }
 
-    render () {
-        this.state = {
-            finishedQuiz: false,
-            currentQuestion: 0,
-            correctAnswers: 0
-        }
-
+    render() {
         const deck = this.getDeck()
 
         if (this.state.finishedQuiz) {
             return (
-                <View>
-                    <Text>Finished</Text>
-                    {this.score()}
-                </View>
+                <QuizScore correctAnswers={this.state.correctAnswers} totalQuestions={deck.questions.length}/>
             )
         }
 

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Alert, StyleSheet, TextInput, Text, KeyboardAvoidingView} from 'react-native'
-import {generateUID, toHome} from '../utils/helpers'
+import {Alert, KeyboardAvoidingView, StyleSheet, Text, TextInput} from 'react-native'
+import {generateUID} from '../utils/helpers'
 import {fetchDecks, newCard} from '../utils/api'
 import {receiveDecks} from '../actions/decks'
 import {GRAY_666, GRAY_EEE, GREEN, WHITE} from '../utils/colors'
@@ -63,7 +63,7 @@ class NewCard extends Component {
                 <Text style={styles.textLabel}>Question</Text>
                 <TextInput style={styles.textInput} onChangeText={(question) => this.setState({question})}
                            value={this.state.question}
-                           placeholder={'Write a Yes or No question'}></TextInput>
+                           placeholder={'Write a question'}></TextInput>
                 <Text style={styles.textLabel}>Answer</Text>
                 <TextInput style={styles.textInput} onChangeText={(answer) => this.setState({answer})}
                            value={this.state.answer}

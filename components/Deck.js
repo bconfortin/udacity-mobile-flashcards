@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {View, Text, TouchableOpacity, StyleSheet, Platform} from 'react-native'
-import { withNavigation } from 'react-navigation'
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native'
+import {withNavigation} from 'react-navigation'
 import {GRAY_666, WHITE} from "../utils/colors";
 
 class Deck extends Component {
-    render () {
+    render() {
         const {deck} = this.props
         const {navigate} = this.props.navigation
 
@@ -25,7 +25,7 @@ class Deck extends Component {
         }
 
         return (
-            <View>
+            <View style={styles.card}>
                 <Text>There are no decks to show.</Text>
                 <TouchableOpacity>
                     <Text>

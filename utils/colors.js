@@ -3,7 +3,6 @@ const BLACK = '#000'
 const GREEN = '#aeea00'
 const RED = '#f44336'
 const GRAY_666 = '#666'
-const GRAY_DDD = '#ddd'
 const GRAY_F5 = '#f5f5f5'
 const GRAY_CCC = '#ccc'
 const GRAY_EEE = '#eee'
@@ -14,7 +13,6 @@ export {
     GREEN,
     RED,
     GRAY_666,
-    GRAY_DDD,
     GRAY_F5,
     BLACK,
     GRAY_CCC,

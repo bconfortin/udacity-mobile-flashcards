@@ -1,10 +1,11 @@
-import React, {Component} from 'react'
-import {TouchableOpacity, Text, StyleSheet} from 'react-native'
+import React from 'react'
+import {StyleSheet, Text, TouchableOpacity} from 'react-native'
 import {WHITE} from "../utils/colors";
 
-function StyledButton (props) {
+function StyledButton(props) {
     return (
-        <TouchableOpacity style={[styles.buttonStyle, {backgroundColor: props.backgroundColor}, {...props.style}]} onPress={props.onPress}>
+        <TouchableOpacity style={[styles.buttonStyle, {backgroundColor: props.backgroundColor}, {...props.style}]}
+                          onPress={props.onPress}>
             <Text style={styles.buttonTextStyle}>{props.buttonText}</Text>
         </TouchableOpacity>
     )

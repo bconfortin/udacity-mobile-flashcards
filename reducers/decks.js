@@ -1,7 +1,7 @@
-import {CREATE_DECK, RECEIVE_DECKS} from "../actions/actionTypes";
+import {CREATE_DECK, RECEIVE_DECKS} from '../actions/actionTypes'
 
-export default function decks (state = {}, action) {
-    switch(action.type) {
+export default function decks(state = {}, action) {
+    switch (action.type) {
         case CREATE_DECK:
             return {
                 ...state,
