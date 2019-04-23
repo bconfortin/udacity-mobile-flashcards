@@ -26,6 +26,9 @@ To run the project, go to the project's folder and run the following command:
 
 #### `yarn start` or `npm start`
 
+You can use Expo's Android or iOS app to open the app in your smartphone. You can also open it
+on an Android or iOS emulator.
+
 ### Final considerations
 
 Big thanks to **moschan**'s [react-native-flip-card](https://www.npmjs.com/package/react-native-flip-card).
