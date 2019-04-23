@@ -1,6 +1,6 @@
 import React from 'react'
 import {Notifications, Permissions} from 'expo'
-import {AsyncStorage} from 'react-native'
+import {AsyncStorage, Platform} from 'react-native'
 
 const NOTIFICATION_KEY = 'UdacityMobileFlashcards:notifications'
 
@@ -61,7 +61,7 @@ function setLocalNotification () {
                                 createLocalNotification(),
                                 {
                                     time: tomorrow,
-                                    repeat: 'day',
+                                    repeat: Platform.OS === 'android' ? 'day' : null,
                                 }
                             )
 
