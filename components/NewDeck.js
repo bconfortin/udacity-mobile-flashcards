@@ -33,7 +33,7 @@ class NewDeck extends Component {
 
         this.setState(() => ({name: ''}))
 
-        toHome(navigate)
+        navigate('DeckDetails', {name: deck.name})
     }
 
     alertForInvalidSubmit = () => {
