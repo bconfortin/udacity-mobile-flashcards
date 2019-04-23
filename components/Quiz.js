@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {StyleSheet, View} from 'react-native'
 import Card from './Card'
-import QuizScore from "./QuizScore";
+import QuizScore from './QuizScore'
+import {clearLocalNotifications, setLocalNotification} from "../utils/helpers";
 
 class Quiz extends Component {
     constructor(props) {
@@ -33,6 +34,9 @@ class Quiz extends Component {
                 ...state,
                 finishedQuiz: true
             }))
+
+            // Clear today's notification and add another one for tomorrow
+            clearLocalNotifications().then(setLocalNotification)
         } else {
             await this.setState((state) => ({
                 ...state,
